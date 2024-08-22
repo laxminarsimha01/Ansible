@@ -1,0 +1,41 @@
+---
+  - hosts: slave2
+    name: delete apache server
+    become: yes
+    tasks:
+      - name: Stop apache service
+        service:
+          name: apache2
+          state: stopped
+          enabled: no
+      - name: uninstall apache service
+        apt:
+          name: apache2
+          state: absent
+          purge: yes
+          autoremove: yes
+          force: yes
+      - name: kill apache processess
+        shell: "pkill -f apache2"
+        ignore_errors: yes
+
+  - hosts: slave1
+    name: delete nginx server
+    become: yes
+    tasks:
+      - name: stop nginx service
+        service:
+          name: nginx
+          state: stopped
+          enabled: no
+      - name: uninstall nginx
+        apt:
+          name: nginx
+          state: absent
+          purge: yes
+          autoremove: yes
+          force: yes
+      - name: ensure no process is running
+        shell: "pkill -f nginx"
+        ignore_errors: yes
+

@@ -1,0 +1,19 @@
+---
+  - hosts: slave1
+    name: play1
+    tasks:
+      - name: Install nginx
+        apt:
+          name: nginx
+          state: present
+        become: yes
+
+  - hosts: slave2
+    name: play2
+    tasks:
+      - name: Install apache
+        apt:
+          name: apache2
+          state: present
+        become: yes
+
