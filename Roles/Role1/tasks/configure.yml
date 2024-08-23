@@ -1,0 +1,5 @@
+---
+  - name: Configure apache2
+    copy:
+      src: index.html
+      dest: /var/www/html
